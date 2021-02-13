@@ -1,0 +1,41 @@
+{% extends 'rango/base.html' %}
+{% load bootstrap_toolkit %}
+{% block title_block %}
+Add Category
+{% endblock %}
+
+
+{% block body_block %}
+   <br>
+        <h2 class="form-signin-heading">Hello {{ user.username }}, add a Category here</h2> <br>
+        <!--'Without bootstrap_toolkit'-->
+        <!--
+        <div>
+            <form role="form" id="category_form" method="post" action="{% url 'add_category' %}">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    {{ field.errors }}
+                    {{ field.help_text }} <br>
+                    {{ field }} <br> <br>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit" name="submit">
+                    Create Category
+                </button>
+            </form>
+         
+        </div>  -->
+
+        <div>
+          <!--'With 'bootstrap_toolkit'-->
+        <form id="category_form" method="post" action="{% url 'add_category' %}">
+            {% csrf_token %}
+            {{ form|as_bootstrap }}
+            <br/>
+            <button class="btn btn-primary" type="submit" name="submit">Create Category</button>
+        </form>
+        </div>
+
+{% endblock %}

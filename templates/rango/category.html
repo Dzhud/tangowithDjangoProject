@@ -1,0 +1,52 @@
+{% extends 'rango/base.html' %}
+{% block title_block %}
+    {{ category.name }}
+{% endblock %}
+
+
+{% block body_block %}
+<br xmlns="http://www.w3.org/1999/html">
+            {% if category %}
+                <h1>{{ category.name }}</h1>
+                <div>
+                    <strong id="like_count">{{ category.likes }}</strong> people like this category
+                    {% if user.is_authenticated %}
+                        <button id="likes" data-catid="{{ category.id }}" class="btn btn-primary btn-sm" type="button">
+                            Like
+                        </button>
+                    {% endif %}
+                </div>
+
+                {% if pages %}
+                    <ul>
+                        {% for page in pages %}
+                            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>No pages currently in category</strong>
+                {% endif %}
+                <a href="{% url 'add_page' category.slug %}">Add a Page</a> 
+            {% else %}
+                The specified category does not exist!
+            {% endif %}
+
+    {% for page in pages %}
+        <li>
+            <a href="{% url 'goto' %}?page_id={{page.id}}">
+               {{ page.title }}</a>
+            {% if page.views > 1 %}
+                ({{ page.views }} views)
+            {% elif page.views == 1 %}
+                ({{ page.views }} view)
+            {% endif %}
+        </li>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <button data-catid="{{category.id}}" data-title="{{ result.title }}" data-url="{{ result.link }}" class="rango-add btn btn-info btn-sm" type="button">
+            Add
+        </button>
+    {% endif %}
+
+
+{% endblock %}

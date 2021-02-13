@@ -1,0 +1,27 @@
+{% extends 'rango/base.html' %}
+{% load bootstrap_toolkit %}
+{% block title_block %}
+About
+{% endblock%}
+
+
+{% block body_block %}   
+    <div>
+        <h1>About Page</h1>
+        <h2 style='color: yellow'> {{ yellow }} <a href='/rango/'>Index</a></h2> <br>
+        <img src= "{{ MEDIA_URL }}cat.png" title="Here's a picture of Rango"/> <br>
+    </div> <br><br><br><br>
+
+    <button class="btn brn-primary" onClick="alert('You clicked the button using JS.');" style="color: black; background-color: lightblue">
+        Click Me- I run vanilla JS
+    </button> <br><br>
+
+    <button class="btn brn-primary" id="about-btn">
+        Click Me- I'm JS on Steroid
+    </button>
+    <p>This is a example</p>
+    <p>This is another example</p>
+
+{% endblock %}
+    
+    

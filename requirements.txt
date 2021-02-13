@@ -1,0 +1,4 @@
+Django==1.9.10
+django-bootstrap-toolkit==2.15.0
+django-registration-redux==1.4
+Pillow==5.4.1

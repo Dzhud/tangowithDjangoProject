@@ -1,0 +1,19 @@
+
+
+<ul class="list-group">
+
+
+
+    <!--'cats' is a key in 'get_category_list()' context dictionary -->
+    
+{% for c in cats %} 
+    {% if c == act_cats %}
+        <li class="list-group-item"><strong><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></strong></li>
+{% else %}
+    <li class="list-group-item"><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></li>
+{% endif %}
+{% endfor %}
+
+
+
+</ul>

@@ -1,0 +1,59 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %} <!--'as per Django 1.9. 'load static' is for Django3-->
+{% block title_block %}
+Home
+{% endblock %}
+
+
+{% block body_block %}
+<div class="jumbotron" xmlns="http://www.w3.org/1999/html">
+      <h1 class="display-3">Rango says...</h1>
+    <!--user.is_authenticated checks if user is logged in -->
+    {% if user.is_authenticated %}
+        <h2><strong>Howdy {{ user.username }}!</strong></h2>
+    {% else %}
+        <h2>Welcome</h2>
+    {% endif %}
+    </div>
+
+    <div class="row-marketing">
+        <div class="col-lg-6">
+            <p>Visits: {{ visits }} </p>
+            <h4>Most Liked Categories</h4>
+                <div>
+                {% if categories %}
+                    <ul class="list-group">
+                        {% for category in categories %}
+                            <li class="list-group-item">
+                                <a href="{% url 'show_category' category.slug  %}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>There are no categories present.</strong>
+                {% endif %}
+                </div>
+    </div>
+    <div class="col-lg-6">
+            <h4>Most Viewed Pages</h4>
+            <div>
+            {% if pages %}
+                <ul class="list-group">
+                    {% for page in pages %}
+                    <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                                     
+            {% else %}
+                <strong>There are no categories present </strong>
+            {% endif %}
+            </div>
+    </div>
+    </div>
+
+    <img class="img-thumbnail" src="{% static 'images/rang1.png' %}" alt="Rango's Picture" />
+
+{% endblock %}
+
+   
+

@@ -1,0 +1,203 @@
+{% comment %}
+<!-- Old base.html w/o styling
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<html>
+    <head>
+        <title>
+            Rango | {% block title_block %}
+            How to Tango with Django!
+            {% endblock %}
+        </title>   
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        
+        <link rel="icon" type="image/png" sizes="any" href="{% static 'images/ran1.png' %}" />
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div> <hr>
+        <div>
+            {% block sidebar_block %}
+                {% get_category_list category %} <!--from rango_template_tags.py --><!--
+            {% endblock %}
+        </div>
+        
+        <div>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+
+                    <li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+                    <li><a href="{% url 'add_category' %}">Add New Category</a></li>
+                    <!--Password Change according to d Reg Redux app will only-->
+                    <!--work if User is logged in i.e authnticated.--> <!--
+                    <li><a href="/accounts/password/change/">Change Password</a>!</li>
+                {% else %}
+                     <li><a href="{% url 'auth_login' %}">Login</a></li>
+                     <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+                {% endif %}
+                
+
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'index' %}">Index</a></li>
+
+            </ul>
+        </div>
+    
+    </body>
+</html>-->
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--The above 3 Meta Tags MUST come first in the head -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/ran1.ico' %}">
+
+
+    <title>
+        Rango - {% block title_block %} How to Tango with Django!
+                {% endblock %}
+    </title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+     <link rel="stylesheet" href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+
+
+
+
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+      <a class="navbar-brand" href="{% url 'index' %}">Rango</a>
+
+      <div class="collapse navbar-collapse" id="navbar">
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">
+                    Home
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">
+                    About
+                </a>
+             </li>
+
+
+             {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' user.username %}">
+                    Profile
+                </a><a class="nav-link" href="{% url 'list_profiles' %}">
+                    List Profiles
+                </a>
+            </li> <li class="nav-item">
+                <a class="nav-link" href="{% url 'restricted' %}">
+                    Restricted Page
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_category' %}">
+                    Add a New Category
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">
+                    Logout
+                </a>
+            </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registration_register' %}">
+                        Register Here
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_login' %}">
+                        Login
+                    </a>
+                </li>
+            {% endif %}
+         </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-list flex-column">
+          <li class="nav-item">Type to find a category</li>
+            <form>
+                <li class="nav-item">
+                    <input class="search-query form-control" type="text" name="suggestion" value="" id="suggestion" />
+                </li>
+            </form>
+            </ul>
+            <hr>
+            <div id="cats">
+            </div>
+
+
+    </div>
+        <br>
+        <!--<input class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" /> -->
+
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+        {% block body_block %}
+
+        {% endblock %}
+    </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+
+
+
+     <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+     <script src="{% static 'js/rango-ajax.js' %}"></script>
+     <script src="{% static 'js/jquery.min.js' %}"></script>
+     <script src="{% static 'js/rango-jquery.js' %}"></script>
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

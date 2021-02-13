@@ -1,0 +1,12 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+Restricted
+{% endblock%}
+
+{% block body_block %}
+Ooops! {{ user }}, Rango doesn't have your record <br><br>
+Go to <button><a href="{% url 'index' %}">Home</a></button>
+
+
+{% endblock %}
